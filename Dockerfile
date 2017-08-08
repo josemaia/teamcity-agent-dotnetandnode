@@ -15,8 +15,11 @@ RUN apt-get install mono-complete -y
 
 #export MONO_TLS_PROVIDER=legacy - to be tested. may or may not be necessary due to https://bugzilla.xamarin.com/show_bug.cgi?id=57019
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs
+#RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+#RUN apt-get install -y nodejs
+
+RUN sh -c 'echo "deb https://deb.nodesource.com/node_6.x xenial main" > /etc/apt/sources.list.d/nodesource.list' && \
+	curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 
 VOLUME /opt/buildagent/work
 VOLUME /opt/buildagent/logs
