@@ -26,5 +26,7 @@ Until https://github.com/dotnet/cli/issues/6178 / https://github.com/dotnet/cli/
 sudo docker exec {serene_meninsky} mkdir -p /opt/dotnet/sdk/1.0.4/Sdks/Microsoft.Docker.Sdk/
 sudo docker cp /opt/dotnet/sdk/1.0.4/Sdks/Microsoft.Docker.Sdk/ {serene_meninsky}:/opt/dotnet/sdk/1.0.4/Sdks/Microsoft.Docker.Sdk/
 
+login to the container, and do:
+systemctl enable docker
+service docker start (if you don't want to restart)
 
-sudo docker run -it -e SERVER_URL="https://teamcity.numbersbelieve.com" -v /opt/data/Docker/buildAgent001/conf/:/data/teamcity_agent/conf --restart=always --privileged -e DOCKER_IN_DOCKER="start" josemaia/teamcity-agent-dotnetandnode 
