@@ -28,5 +28,4 @@ sudo docker cp /opt/dotnet/sdk/1.0.4/Sdks/Microsoft.Docker.Sdk/ {serene_meninsky
 
 login to the container, and do:
 systemctl enable docker
-service docker start (if you don't want to restart)
-
+service docker start (if it isn't up)
