@@ -23,9 +23,7 @@ RUN sh -c 'echo "deb https://deb.nodesource.com/node_6.x xenial main" > /etc/apt
 
 RUN (crontab -u root -l; echo "@reboot ./run-agent.sh" ) | crontab -u root -
 
-VOLUME /opt/buildagent/work
 VOLUME /opt/buildagent/logs
-VOLUME /data/teamcity_agent/conf
 VOLUME /opt/buildagent/plugins
 
 ENV TZ 'Europe/London'
@@ -43,4 +41,3 @@ apt-get install docker-compose -y
 
 ENV DOCKER_HOST ""
 ENV DOCKER_BIN "/usr/bin/docker"
-
