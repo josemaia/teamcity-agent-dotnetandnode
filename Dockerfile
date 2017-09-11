@@ -21,6 +21,9 @@ RUN sh -c 'echo "deb https://deb.nodesource.com/node_6.x xenial main" > /etc/apt
 	apt-get update && \
 	apt-get install nodejs -y 
 
+RUN mkdir -p /root/.npm/node-sass/4.5.3/ && \
+curl -L https://github.com/sass/node-sass/releases/download/v4.5.3/linux-x64-48_binding.node > /root/.npm/node-sass/4.5.3/linux-x64-48_binding.node
+
 RUN (crontab -u root -l; echo "@reboot ./run-agent.sh" ) | crontab -u root -
 
 VOLUME /opt/buildagent/logs
