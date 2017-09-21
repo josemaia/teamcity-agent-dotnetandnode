@@ -27,7 +27,7 @@ RUN mkdir -p /root/.npm/node-sass/4.5.3/ && \
 curl -L https://github.com/sass/node-sass/releases/download/v4.5.3/linux-x64-48_binding.node > /root/.npm/node-sass/4.5.3/linux-x64-48_binding.node
 
 RUN (crontab -u root -l; echo "@reboot ./run-agent.sh" ) | crontab -u root -
-RUN systemctl enable docker
+RUN (crontab -u root -l; echo "@reboot ./run-docker.sh" ) | crontab -u root -
 
 # Install Chrome WebDriver
 RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
