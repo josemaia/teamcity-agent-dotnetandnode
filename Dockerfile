@@ -17,6 +17,9 @@ RUN sh -c 'echo "deb http://download.mono-project.com/repo/ubuntu xenial main" >
 #to be tested. may or may not be necessary due to https://bugzilla.xamarin.com/show_bug.cgi?id=57019
 RUN export MONO_TLS_PROVIDER=legacy 
 
+#force Mono and dotnet CLI to both use the same NuGet configurations due to https://github.com/NuGet/Home/issues/4413
+ln -s /root/.nuget/NuGet/NuGet.Config /root/.config/NuGet/NuGet.Config
+
 # Install Node
 RUN sh -c 'echo "deb https://deb.nodesource.com/node_6.x xenial main" > /etc/apt/sources.list.d/nodesource.list' && \
 	curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
