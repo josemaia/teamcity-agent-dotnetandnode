@@ -8,26 +8,26 @@ See https://hub.docker.com/r/josemaia/teamcity-agent-dotnetandnode/
 ## Create a new teamcity dotnet/node build agent:
 
 (On the docker host)
-sudo docker run -it -e SERVER_URL="https://teamcity.example.com" -v /opt/data/Docker/buildAgent001/conf/:/data/teamcity_agent/conf -e AGENT_NAME="buildAgent001" -v /opt/data/Docker/buildAgent001/plugins/:/opt/buildagent/plugins/ --restart=always josemaia/teamcity-agent-dotnetandnode 
 
-(replace 001 with the desired #, and the server URL with your own. make sure the /opt/data/Docker/buildAgent001/conf/ and /plugins/ folders already exist!)
+sudo docker run -d -it -e \
+SERVER_URL="https://teamcity.example.com" \
+-v /opt/data/Docker/buildagent001/conf/:/data/teamcity_agent/conf  \
+-v /opt/data/Docker/buildagent001/plugins/:/opt/buildagent/plugins/  \
+-v /opt/data/Docker/buildagent001/work/:/opt/buildagent/work/  \
+--restart=always --privileged -e DOCKER_IN_DOCKER="start"  \
+-e AGENT_NAME="buildagent001" --name buildagent001  \
+josemaia/teamcity-agent-dotnetandnode
 
-If you also need to build docker images inside the host, add the flags --privileged -e DOCKER_IN_DOCKER="start"
+Replace buildagent001 with the desired name, and the server URL with your own. 
+Make sure the /opt/data/Docker/buildagent001/conf/ and /plugins/ folders already exist!
 
-## Start an existing one:
-sudo docker container list -a
+The work folder mounting is optional, but the conf and plugins mounts are heavily recommended.
 
-sudo docker start {serene_meninsky}(replace with ID)
+The flags --privileged -e DOCKER_IN_DOCKER="start" are only relevant for building docker images inside the container.
 
 ## If using to build solutions that have docker:
 
-Until https://github.com/dotnet/cli/issues/6178 / https://github.com/dotnet/cli/pull/6180 is fixed, you will need to manually copy the docker SDK to the dotnet folder.
-
-sudo docker exec {serene_meninsky} mkdir -p /opt/dotnet/sdk/2.0.0/Sdks/Microsoft.Docker.Sdk/
-
-sudo docker cp /opt/dotnet/sdk/2.0.0/Sdks/Microsoft.Docker.Sdk/ {serene_meninsky}:/opt/dotnet/sdk/2.0.0/Sdks/Microsoft.Docker.Sdk/
-
-login to the container, and do:
+The container may not always start its inner Docker. In this case, login to the container, and do:
 systemctl enable docker
 
 service docker start (if it isn't up)
