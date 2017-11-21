@@ -18,7 +18,8 @@ RUN sh -c 'echo "deb http://download.mono-project.com/repo/ubuntu xenial main" >
 RUN export MONO_TLS_PROVIDER=legacy 
 
 #force Mono and dotnet CLI to both use the same NuGet configurations due to https://github.com/NuGet/Home/issues/4413
-ln -s /root/.nuget/NuGet/NuGet.Config /root/.config/NuGet/NuGet.Config
+RUN mkdir -p /root/.config/NuGet/ && \
+	ln -s /root/.nuget/NuGet/NuGet.Config /root/.config/NuGet/NuGet.Config
 
 # Install Node
 RUN sh -c 'echo "deb https://deb.nodesource.com/node_6.x xenial main" > /etc/apt/sources.list.d/nodesource.list' && \
@@ -29,8 +30,8 @@ RUN sh -c 'echo "deb https://deb.nodesource.com/node_6.x xenial main" > /etc/apt
 RUN mkdir -p /root/.npm/node-sass/4.5.3/ && \
 curl -L https://github.com/sass/node-sass/releases/download/v4.5.3/linux-x64-48_binding.node > /root/.npm/node-sass/4.5.3/linux-x64-48_binding.node
 
-RUN (crontab -u root -l; echo "@reboot ./run-agent.sh" ) | crontab -u root -
-RUN (crontab -u root -l; echo "@reboot ./run-docker.sh" ) | crontab -u root -
+#RUN (crontab -u root -l; echo "@reboot ./run-agent.sh" ) | crontab -u root -
+#RUN (crontab -u root -l; echo "@reboot ./run-docker.sh" ) | crontab -u root -
 
 # Install Chrome WebDriver
 RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
