@@ -20,7 +20,7 @@ RUN export MONO_TLS_PROVIDER=legacy
 #force Mono and dotnet CLI to both use the same NuGet configurations due to https://github.com/NuGet/Home/issues/4413
 RUN mkdir -p /root/.config/NuGet/ && \
 	mkdir -p /root/.nuget/NuGet/ && \
-	touch /root/.nuget/NuGet/NuGet.Config && \
+	echo '<?xml version="1.0" encoding="utf-8"?><configuration></configuration>' >/root/.nuget/NuGet/NuGet.Config && \
 	ln -s /root/.nuget/NuGet/NuGet.Config /root/.config/NuGet/NuGet.Config
 
 # Install Node
